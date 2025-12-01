@@ -1,0 +1,20 @@
+def count_zeros(rotations):
+    pos = 50
+    zeros = 0
+    for line in rotations.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        dir_char = line[0].upper()
+        n = int(line[1:])
+        if dir_char == 'R':
+            pos = (pos + n) % 100
+        else:  # assume 'L'
+            pos = (pos - n) % 100
+        if pos == 0:
+            zeros += 1
+    return zeros
+
+# Read from file 'input.txt' in same folder:
+with open('day1slc.txt') as f:
+    print("Password:", count_zeros(f.read()))
