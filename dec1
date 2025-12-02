@@ -37,8 +37,8 @@ def count_zeros_all(rotations):
     return zeros
 
 if __name__ == "__main__":
-    # Read from file 'day1scl.txt' in same folder:
-    with open('day1scl.txt') as f:
+    # Read from file 'dec1scl.txt' in same folder:
+    with open('dec1scl.txt') as f:
         lines = f.read()
         print("Password part 1:", count_zeros_end(lines))
         print("Password part 2:", count_zeros_all(lines))
