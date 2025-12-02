@@ -1,4 +1,5 @@
-def count_zeros(rotations):
+def count_zeros_end(rotations):
+    """Part 1: Count times dial points at 0 at the END of a rotation."""
     pos = 50
     zeros = 0
     for line in rotations.splitlines():
@@ -15,6 +16,29 @@ def count_zeros(rotations):
             zeros += 1
     return zeros
 
-# Read from file 'day1slc.txt' in same folder:
-with open('day1slc.txt') as f:
-    print("Password:", count_zeros(f.read()))
+def count_zeros_all(rotations):
+    """Part 2: Count times dial points at 0, including during a rotation."""
+    pos = 50
+    zeros = 0
+    for line in rotations.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        dir_char = line[0].upper()
+        n = int(line[1:])
+        if dir_char == 'R':
+            step = 1
+        else:  # assume 'L'
+            step = -1
+        for _ in range(n):
+            pos = (pos + step) % 100
+            if pos == 0:
+                zeros += 1
+    return zeros
+
+if __name__ == "__main__":
+    # Read from file 'day1slc.txt' in same folder:
+    with open('day1slc.txt') as f:
+        lines = f.read()
+        print("Password part 1:", count_zeros_end(lines))
+        print("Password part 2:", count_zeros_all(lines))
