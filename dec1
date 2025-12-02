@@ -1,44 +1,48 @@
-def count_zeros_end(rotations):
-    """Part 1: Count times dial points at 0 at the END of a rotation."""
+def solve(rotations):
+    # Part 1: Count times the dial is exactly 0 *after* completing a rotation
     pos = 50
-    zeros = 0
-    for line in rotations.splitlines():
-        line = line.strip()
-        if not line:
-            continue
-        dir_char = line[0].upper()
-        n = int(line[1:])
-        if dir_char == 'R':
-            pos = (pos + n) % 100
-        else:  # assume 'L'
-            pos = (pos - n) % 100
-        if pos == 0:
-            zeros += 1
-    return zeros
+    part1 = 0
 
-def count_zeros_all(rotations):
-    """Part 2: Count times dial points at 0, including during a rotation."""
-    pos = 50
-    zeros = 0
-    for line in rotations.splitlines():
-        line = line.strip()
-        if not line:
-            continue
-        dir_char = line[0].upper()
+    for line in rotations:
+        d = line[0]
         n = int(line[1:])
-        if dir_char == 'R':
-            step = 1
-        else:  # assume 'L'
-            step = -1
+
+        if d == 'R':
+            pos = (pos + n) % 100
+        else:
+            pos = (pos - n) % 100
+
+        if pos == 0:
+            part1 += 1
+
+    # Part 2: Count every time a click lands on 0
+    pos = 50
+    part2 = 0
+
+    for line in rotations:
+        d = line[0]
+        n = int(line[1:])
+
+        if d == 'R':
+            direction = 1
+        else:
+            direction = -1
+
         for _ in range(n):
-            pos = (pos + step) % 100
+            pos = (pos + direction) % 100
             if pos == 0:
-                zeros += 1
-    return zeros
+                part2 += 1
+
+    return part1, part2
+
 
 if __name__ == "__main__":
-    # Read from file 'dec1scl.txt' in same folder:
-    with open('dec1scl.txt') as f:
-        lines = f.read()
-        print("Password part 1:", count_zeros_end(lines))
-        print("Password part 2:", count_zeros_all(lines))
+    # Read puzzle input from a file (e.g., input.txt)
+    with open("day1scl.txt") as f:
+        rotations = [line.strip() for line in f if line.strip()]
+
+    p1, p2 = solve(rotations)
+
+    print("Part 1:", p1)
+    print("Part 2:", p2)
+
